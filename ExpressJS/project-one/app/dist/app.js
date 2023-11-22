@@ -51,4 +51,20 @@ app.post("/users/create-user", (req, res) => {
         message: "Successfully created user",
     });
 });
+// all error give
+app.all("*", (req, res) => {
+    res.status(400).json({
+        success: false,
+        message: "Not Found",
+    });
+});
+//global error handler
+app.use((error, req, res, next) => {
+    if (error) {
+        res.status(500).json({
+            success: false,
+            message: "Something went to wrong",
+        });
+    }
+});
 exports.default = app;

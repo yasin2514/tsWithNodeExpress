@@ -55,4 +55,21 @@ app.post("/users/create-user", (req: Request, res: Response) => {
   });
 });
 
+// all error give
+app.all("*", (req: Request, res: Response) => {
+  res.status(400).json({
+    success: false,
+    message: "Not Found",
+  });
+});
+
+//global error handler
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went to wrong",
+    });
+  }
+});
 export default app;
