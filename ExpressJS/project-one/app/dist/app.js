@@ -8,6 +8,37 @@ const app = (0, express_1.default)();
 //parser---
 app.use(express_1.default.json());
 app.use(express_1.default.text());
+//create router
+const userRouter = express_1.default.Router();
+const coursesRouter = express_1.default.Router();
+//create  middleware
+const logger = (req, res, next) => {
+    next();
+};
+//router middleware
+app.use("/api/v1/users", logger, userRouter);
+app.use("/api/v1/courses", logger, coursesRouter);
+// use router api--------------------------
+userRouter.post("/create-user", (req, res) => {
+    const user = req.body;
+    console.log({ user });
+    res.json({
+        success: true,
+        message: "user created successfully",
+        data: user,
+    });
+});
+//course router api-----------------------
+coursesRouter.post("/create-course", (req, res) => {
+    const course = req.body;
+    console.log({ course });
+    res.json({
+        success: true,
+        message: "course created successfully",
+        data: course,
+    });
+});
+// normal api-----------------------
 // get api
 app.get("/", (req, res) => {
     res.send("Hello I'm Server");
@@ -17,7 +48,7 @@ app.post("/users/create-user", (req, res) => {
     console.log(req.body);
     res.json({
         success: true,
-        message: "Success fully create user",
+        message: "Successfully created user",
     });
 });
 exports.default = app;
